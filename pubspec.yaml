@@ -1,5 +1,5 @@
 name: wallpaper_app
-description: A new Flutter project.
+description: A Flutter project which can be used to search and set wallpapers for phone.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
