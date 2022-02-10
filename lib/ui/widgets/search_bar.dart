@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               decoration: ShapeDecoration(
                 shape: const CircleBorder(),
                 color: Theme.of(context).primaryColor,
@@ -40,21 +40,6 @@ class SearchBar extends StatelessWidget {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(right: 10),
-            //   child: TextButton(
-            //     onPressed: () {},
-            //     child: Text(
-            //       "Go",
-            //       style: Theme.of(context).textTheme.button?.copyWith(
-            //           color: Colors.black, fontWeight: FontWeight.w700),
-            //     ),
-            //     style: TextButton.styleFrom(
-            //       shape: StadiumBorder(),
-            //       backgroundColor: Colors.green[200],
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),
