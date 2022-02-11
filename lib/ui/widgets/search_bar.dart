@@ -21,45 +21,62 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: ShapeDecoration(
+          shape: const StadiumBorder(), color: Colors.grey[200]),
       alignment: Alignment.center,
-      child: Card(
-        shape: const StadiumBorder(),
-        elevation: 3.0,
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                  controller: _controller,
-                  textInputAction: TextInputAction.search,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                    hintText: "Search",
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Colors.grey),
-                    border: InputBorder.none,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+                controller: _controller,
+                textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  hintText: "Happy face, Music, Nature",
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: Colors.grey),
+                  border: InputBorder.none,
+                  suffix: GestureDetector(
+                    onTap: () {
+                      _controller.clear();
+                      widget.onSearchPressed(_controller.text);
+                    },
+                    child: Text(
+                      "Clear",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: Colors.grey),
+                    ),
                   ),
-                  onSubmitted: (value) =>
-                      widget.onSearchPressed(_controller.text)),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              decoration: ShapeDecoration(
-                shape: const CircleBorder(),
-                color: Theme.of(context).primaryColor,
-              ),
-              child: IconButton(
-                onPressed: () => widget.onSearchPressed(_controller.text),
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.white,
                 ),
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    widget.onSearchPressed(_controller.text);
+                  }
+                }),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+            decoration: ShapeDecoration(
+              shape: const CircleBorder(),
+              color: Theme.of(context).primaryColor,
+            ),
+            child: IconButton(
+              onPressed: () {
+                if (_controller.text.isNotEmpty) {
+                  widget.onSearchPressed(_controller.text);
+                }
+              },
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
