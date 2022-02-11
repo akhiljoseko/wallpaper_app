@@ -17,11 +17,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late PagingController<int, PhotoData> _pagingController;
+  late ScrollController _scrollController;
   String searchQuery = "";
+  bool _showFAB = false;
   @override
   void initState() {
     _pagingController = PagingController(firstPageKey: 1);
     _pagingController.addPageRequestListener((pageKey) => _fetchPage(pageKey));
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      _handleFAB();
+    });
     super.initState();
   }
 
@@ -50,6 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: _showFAB
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                _scrollController.animateTo(0.00,
+                    duration: const Duration(milliseconds: 750),
+                    curve: Curves.easeOutSine);
+              },
+              label: const Text("Top"),
+              icon: const Icon(Icons.arrow_upward),
+            )
+          : null,
       body: SafeArea(
         child: NotificationListener<ScrollUpdateNotification>(
           onNotification: (ScrollUpdateNotification notification) {
@@ -62,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return false;
           },
           child: CustomScrollView(
+            controller: _scrollController,
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
@@ -136,5 +154,17 @@ class _HomeScreenState extends State<HomeScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
     searchQuery = newQuery;
     _pagingController.refresh();
+  }
+
+  void _handleFAB() {
+    if (_scrollController.offset > 400.0) {
+      setState(() {
+        _showFAB = true;
+      });
+    } else {
+      setState(() {
+        _showFAB = false;
+      });
+    }
   }
 }
