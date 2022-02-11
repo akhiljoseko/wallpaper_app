@@ -7,7 +7,7 @@ class BaseApi {
   final _apiKey = "25624889-24abcab269e9b31f4a309559a";
 
   Future<dynamic> get(String params) async {
-    String url = _baseUrl + "?key=$_apiKey&" + params;
+    String url = _baseUrl + "?key=$_apiKey" + params;
     final response = await http.get(Uri.parse(url));
     return _getResponse(response);
   }
