@@ -15,7 +15,7 @@ class LoadingWidget extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         decoration: BoxDecoration(
-            color: Colors.blue, borderRadius: BorderRadius.circular(12.0)),
+            color: Colors.blue, borderRadius: BorderRadius.circular(4.0)),
         height: 300,
         width: 300,
       ),
