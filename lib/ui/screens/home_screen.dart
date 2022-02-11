@@ -3,8 +3,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:wallpaper_app/models/photo_data.dart';
 import 'package:wallpaper_app/providers/search_result_provider.dart';
 import 'package:wallpaper_app/ui/screens/image_screen.dart';
+import 'package:wallpaper_app/ui/widgets/full_screen_error_widget.dart';
+import 'package:wallpaper_app/ui/widgets/full_screen_loading_widget.dart';
 import 'package:wallpaper_app/ui/widgets/image_preview_container.dart';
-import 'package:wallpaper_app/ui/widgets/loading_widget.dart';
 import 'package:wallpaper_app/ui/widgets/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black,
       body: SafeArea(
         child: NotificationListener<ScrollUpdateNotification>(
           onNotification: (ScrollUpdateNotification notification) {
@@ -65,10 +65,31 @@ class _HomeScreenState extends State<HomeScreen> {
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                   width: double.maxFinite,
-                  height: 150,
-                  child:
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hi there,",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Lets get some wallpapers",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 24),
                       SearchBar(onSearchPressed: (s) => _updateSearchQuery(s)),
+                    ],
+                  ),
                 ),
               ),
               PagedSliverGrid<int, PhotoData>(
@@ -89,23 +110,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  firstPageProgressIndicatorBuilder: (context) => SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: GridView.builder(
-                      itemCount: 12,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 3 / 4,
-                      ),
-                      itemBuilder: (_, __) => const LoadingWidget(),
-                    ),
+                  firstPageProgressIndicatorBuilder: (context) =>
+                      const FullScreenLoadingWidget(),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      FullScreenErrorWidget(
+                    onRetryPressed: () =>
+                        _pagingController.retryLastFailedRequest(),
                   ),
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 3 / 4,
+                  mainAxisSpacing: 2,
+                  crossAxisSpacing: 2,
                 ),
               ),
             ],
