@@ -16,6 +16,15 @@ Planning to develop this application as wallpaper application that can be used t
 
 # Screen Shots 
 
+## HOME SCREEN
+
+![alt text](/screenshots/home.jpg)
+
+## IMAGE VIEW SCREEN
+
+
+![alt text](/screenshots/image-view.jpg)
+
 # How to clone this project ?
 
 ## Clone Repository 
