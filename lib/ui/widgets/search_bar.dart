@@ -41,7 +41,6 @@ class _SearchBarState extends State<SearchBar> {
                   suffix: GestureDetector(
                     onTap: () {
                       _controller.clear();
-                      widget.onSearchPressed(_controller.text);
                     },
                     child: Text(
                       "Clear",
@@ -52,11 +51,8 @@ class _SearchBarState extends State<SearchBar> {
                     ),
                   ),
                 ),
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    widget.onSearchPressed(_controller.text);
-                  }
-                }),
+                onSubmitted: (value) =>
+                    widget.onSearchPressed(_controller.text)),
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
@@ -65,11 +61,7 @@ class _SearchBarState extends State<SearchBar> {
               color: Theme.of(context).primaryColor,
             ),
             child: IconButton(
-              onPressed: () {
-                if (_controller.text.isNotEmpty) {
-                  widget.onSearchPressed(_controller.text);
-                }
-              },
+              onPressed: () => widget.onSearchPressed(_controller.text),
               icon: const Icon(
                 Icons.search,
                 color: Colors.white,
