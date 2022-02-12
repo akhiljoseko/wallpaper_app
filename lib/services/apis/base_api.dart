@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:wallpaper_app/environment.dart';
 import 'package:wallpaper_app/services/apis/exception.dart';
 
 class BaseApi {
   final _baseUrl = "https://pixabay.com/api/";
-  final _apiKey = Environment().apiKey;
+  final _apiKey =
+      const String.fromEnvironment('apikey', defaultValue: 'default');
 
   Future<dynamic> get(String params) async {
     String url = _baseUrl + "?key=$_apiKey" + params;
