@@ -2,6 +2,16 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'photo_data.g.dart';
 
+/// This is a model class used to parse data returned from https://pixabay.com/api/
+///
+/// This class contains two functions
+/// 1. [PhotoData.fromJson] which is used to decode json data and create a
+/// [PhotoData] object through factory
+/// 2. [PhotoData.toJson] which is used to encode a  [PhotoData] object into
+/// a [Map]
+///
+/// This model class is created using package _json_serializable_ https://pub.dev/packages/json_serializable
+/// hence a class with most of the boiler plate codes, will be generated as a part of this file
 @JsonSerializable()
 class PhotoData {
   PhotoData({

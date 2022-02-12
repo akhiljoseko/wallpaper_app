@@ -36,7 +36,12 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
       body: Hero(
         tag: widget.photoData.id,
         child: GestureDetector(
+          // Call back will be executed when user taps on the image
+          // will toggle the back ground color of scaffold between black and white
           onTap: () => setState(() => _isDarkBackground = !_isDarkBackground),
+
+          // These call backs will be executed when user double taps on the image
+          // Results in zoom in and zoom out the image
           onDoubleTapDown: _handleDoubleTapDown,
           onDoubleTap: _handleDoubleTap,
           child: InteractiveViewer(
