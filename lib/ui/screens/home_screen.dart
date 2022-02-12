@@ -18,8 +18,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late PagingController<int, PhotoData> _pagingController;
   late ScrollController _scrollController;
-  String searchQuery = "";
+
+  // Stores search query inout from the user
+  String _searchQuery = "";
+
+  // Decides whether FAB should display or not
   bool _showFAB = false;
+
   @override
   void initState() {
     _pagingController = PagingController(firstPageKey: 1);
@@ -34,13 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _pagingController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
+  /// This function initiate an api call to fetch search result from api
+  ///
+  /// Controls pagination by appending new pages an caching old data internally
+  ///
+  /// If error is occured while fetching data error will be assigned to the controller
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-          await SearchResultProvider().getSearchResult(searchQuery, pageKey);
+          await SearchResultProvider().getSearchResult(_searchQuery, pageKey);
       final isLastPage = newItems.length < 20;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);
@@ -56,8 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Shows FAB only if _showFAB is true
       floatingActionButton: _showFAB
           ? FloatingActionButton.extended(
+              // This call back will programatically scrolls the page to top
               onPressed: () {
                 _scrollController.animateTo(0.00,
                     duration: const Duration(milliseconds: 750),
@@ -69,6 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
           : null,
       body: SafeArea(
         child: NotificationListener<ScrollUpdateNotification>(
+          // This call back will be executed whenever user starts scrolling
+          // This will hide the key board by removing focus from the search bar
           onNotification: (ScrollUpdateNotification notification) {
             final FocusScopeNode focusScope = FocusScope.of(context);
             if (notification.dragDetails != null &&
@@ -119,11 +134,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, item, index) {
                     return ImagePreviewContainer(
                       photoData: item,
+
+                      // Executes when user taps on a image in home screen
+                      // First removes focus if any means hide keyboard
+                      // Then will navigate to image view screen
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ImagePreviewScreen(photoData: item),
+                          builder: (context) {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            return ImagePreviewScreen(photoData: item);
+                          },
                         ),
                       ),
                     );
@@ -150,12 +171,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// Function to update search query
+  ///
+  /// This will be called whenever user taps on search icon or tapping on the [TextInputAction]
+  ///
+  /// [newQuery] - A string input taken from user input in search box
   void _updateSearchQuery(String newQuery) {
     FocusManager.instance.primaryFocus?.unfocus();
-    searchQuery = newQuery;
+    _searchQuery = newQuery;
     _pagingController.refresh();
   }
 
+  /// Fuction to control FAB state
+  ///
+  /// sets and resets the variable [_showFAB] hence will display or hide the FAB
+  ///
+  /// [_showFAB] - will be set to true if user scrolls greater than 400dp and vice versa
   void _handleFAB() {
     if (_scrollController.offset > 400.0) {
       setState(() {
