@@ -21,6 +21,7 @@ class SearchResultProvider extends ChangeNotifier {
       params = _addToParams(params, "q", encodedQuery);
       params = _addToParams(params, "image_type", "photo");
       params = _addToParams(params, "page", "$pageNumber");
+      params = _addToParams(params, "orientation", "vertical");
       final data = await _repository.getSearchResult(params);
       return data;
     } catch (e) {
@@ -40,7 +41,7 @@ class SearchResultProvider extends ChangeNotifier {
     if (paramValue.isEmpty) {
       return currentUrl;
     } else {
-      return currentUrl + "&" + "$newParam=$paramValue";
+      return "$currentUrl&$newParam=$paramValue";
     }
   }
 }

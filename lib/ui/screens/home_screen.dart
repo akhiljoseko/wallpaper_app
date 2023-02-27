@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Hi there,",
                         style: Theme.of(context)
                             .textTheme
-                            .headline4
+                            .headlineMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 16),
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Lets get some wallpapers",
                         style: Theme.of(context)
                             .textTheme
-                            .headline4
+                            .headlineMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 24),

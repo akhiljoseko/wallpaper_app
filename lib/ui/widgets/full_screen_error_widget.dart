@@ -20,24 +20,24 @@ class FullScreenErrorWidget extends StatelessWidget {
               "Oops!",
               style: Theme.of(context)
                   .textTheme
-                  .headline5
+                  .headlineSmall
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text("Something went wrong",
-                style: Theme.of(context).textTheme.bodyText1),
+                style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 20),
             TextButton(
               onPressed: onRetryPressed,
+              style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  minimumSize: Size(MediaQuery.of(context).size.width / 2, 50)),
               child: Text(
                 "Retry",
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .labelLarge
                     ?.copyWith(color: Colors.white),
               ),
-              style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  minimumSize: Size(MediaQuery.of(context).size.width / 2, 50)),
             )
           ],
         ),

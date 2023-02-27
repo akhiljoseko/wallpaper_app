@@ -35,7 +35,7 @@ class _SearchBarState extends State<SearchBar> {
                   hintText: "Happy face, Music, Nature",
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       ?.copyWith(color: Colors.grey),
                   border: InputBorder.none,
                   suffix: GestureDetector(
@@ -46,7 +46,7 @@ class _SearchBarState extends State<SearchBar> {
                       "Clear",
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1
+                          .bodyLarge
                           ?.copyWith(color: Colors.grey),
                     ),
                   ),

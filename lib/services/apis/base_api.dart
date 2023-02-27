@@ -22,7 +22,7 @@ class BaseApi {
   /// [params] - Url to which Get request is sending. Omitt base url and apiKey from the Url
   /// those will taken care by the [BaseApi]
   Future<dynamic> get(String params) async {
-    String url = _baseUrl + "?key=$_apiKey" + params;
+    String url = "$_baseUrl?key=$_apiKey$params";
     final response = await http.get(Uri.parse(url));
     return _getResponse(response);
   }
